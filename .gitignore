@@ -1,0 +1,17 @@
+# IDE
+.idea/
+*.iml
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.env

@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "10081:10081"  # PORT1
+      - "10082:10082"  # PORT2
+      - "10083:10083"  # PORT3
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb+srv://mohammadtaiba53:Hs9rkIwXGEV76gga@indexlive-cluster.91jjj1w.mongodb.net/?retryWrites=true&w=majority&appName=IndexLive-Cluster
+      - PORT1=10081
+      - PORT2=10082
+      - PORT3=10083
+      - DATABASE_PORT=10085
+      - PROJECT_ID=1957
+    command: ["npm", "run", "dev"]
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "10084:10084"
+    depends_on:
+      - backend
+    environment:
+      - VITE_BASE_URL=http://localhost:10081
+
+  mongo:
+    image: mongo:4.4
+    ports:
+      - "10085:10085"
+    volumes:
+      - ./database:/data/db
+
+volumes:
+  mongo-data:
