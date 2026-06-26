@@ -1,20 +1,14 @@
-version: '3.8'
 services:
   backend:
     build:
       context: ./backend
     ports:
-      - "10081:10081"  # PORT1
-      - "10082:10082"  # PORT2
-      - "10083:10083"  # PORT3
+      - "10081:10081"
     depends_on:
       - mongo
     environment:
-      - MONGO_URL=mongodb+srv://mohammadtaiba53:Hs9rkIwXGEV76gga@indexlive-cluster.91jjj1w.mongodb.net/?retryWrites=true&w=majority&appName=IndexLive-Cluster
-      - PORT1=10081
-      - PORT2=10082
-      - PORT3=10083
-      - DATABASE_PORT=10085
+      - MONGO_URL=mongodb://mongo:27017/indexlive
+      - PORT=10081
       - PROJECT_ID=1957
     command: ["npm", "run", "dev"]
 
@@ -31,9 +25,9 @@ services:
   mongo:
     image: mongo:4.4
     ports:
-      - "10085:10085"
+      - "10085:27017"
     volumes:
-      - ./database:/data/db
+      - mongo-data:/data/db
 
 volumes:
   mongo-data:
