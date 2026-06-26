@@ -20,17 +20,20 @@ const Set1 = () => {
     const { data } = useGetKpisQuery();
 
     const revenueExpenses = useMemo(() => {
-        return (
-            data &&
-            data[0].monthlyData.map(({ month, revenue, expenses }) => {
-                return {
-                    name: month.substring(0, 3),
-                    revenue: revenue,
-                    expenses: expenses,
-                    profit: (revenue - expenses).toFixed(2),
-                };
-            })
-        );
+        const kpi = data?.[0];
+
+        if (!kpi?.monthlyData) {
+            return [];
+        }
+
+        return kpi.monthlyData.map(({ month, revenue, expenses }) => {
+            return {
+                name: month.substring(0, 3),
+                revenue: revenue,
+                expenses: expenses,
+                profit: (revenue - expenses).toFixed(2),
+            };
+        });
     }, [data]);
 
     return (

@@ -44,6 +44,11 @@ const createServer = async (port) => {
     server.applyMiddleware({ app });
 
     /* ROUTES */
+    app.get("/", (request, response) => {
+        response.json({
+            message: "IndexLive API is running"
+        });
+    });
     app.use("/kpi", kpiRoutes);
     app.use("/product", productRoutes);
     app.use("/transaction", transactionRoutes);
@@ -55,28 +60,22 @@ const createServer = async (port) => {
             app.listen(port, () => console.log(`Server running on port ${port}`));
             console.log(`Gitlab Project ID: ${process.env.PROJECT_ID}`);
 
-            mongoose.connection.once('open', async () => {
-                try {
-                    console.log(`Dropping database...`);
-                    await mongoose.connection.db.dropDatabase();
-                    console.log(`Inserting initial data...`);
-                    await kpiModel.insertMany(kpis);
-                    await productModel.insertMany(products);
-                    await transactionModel.insertMany(transactions);
-                    console.log(`Data inserted successfully`);
-                } catch (error) {
-                    if (error.code === 11000) {
-                        console.log('Duplicate data detected, skipping insertion');
-                    } else {
-                        console.log(`Error inserting data: ${error}`);
-                    }
-                }
-            });
+            try {
+                console.log("Dropping database...");
+                await mongoose.connection.db.dropDatabase();
+
+                console.log("Inserting initial data...");
+                await kpiModel.insertMany(kpis);
+                await productModel.insertMany(products);
+                await transactionModel.insertMany(transactions);
+
+                console.log("Data inserted successfully");
+            } catch (error) {
+                console.log(`Error inserting data: ${error}`);
+            }
         })
         .catch((error) => console.log(`${error} did not connect`));
 };
 
-// Start servers on PORT1, PORT2, and PORT3
-createServer(process.env.PORT1 || 10081);
-createServer(process.env.PORT2 || 10082);
-createServer(process.env.PORT3 || 10083);
+// Start servers on Port
+createServer(process.env.PORT || 10081);

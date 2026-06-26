@@ -16,26 +16,26 @@ const Set3 = () => {
     const { data: transactionData }   = useGetTransactionsQuery();
 
     const pieChartData = useMemo(() => {
-        if (kpiData)
-        {
-            const totalExpenses = kpiData[0].totalExpenses;
+        const kpi = kpiData?.[0];
 
-            return Object.entries(kpiData[0].expensesByCategory).map(
-                ([key, value]) => {
-                    return [
-                        {   // 1. Part of the PieChart
-                            name: key,
-                            value: value,
-                        },
-
-                        {   // 2. Part of the PieChart
-                            name: `${key} of Total`,
-                            value: totalExpenses - value,
-                        },
-                    ];
-                }
-            );
+        if (!kpi?.expensesByCategory) {
+            return [];
         }
+
+        const totalExpenses = kpi.totalExpenses;
+
+        return Object.entries(kpi.expensesByCategory).map(([key, value]) => {
+            return [
+                {
+                    name: key,
+                    value: value,
+                },
+                {
+                    name: `${key} of Total`,
+                    value: totalExpenses - value,
+                },
+            ];
+        });
     }, [kpiData]);
 
     const productColumns = [
@@ -98,6 +98,7 @@ const Set3 = () => {
                     height="85%"
                 >
                     <DataGrid
+                        getRowId={(row) => row._id}
                         columnHeaderHeight={30}
                         rowHeight={33}
                         sx={{
@@ -123,6 +124,7 @@ const Set3 = () => {
                     height="85%"
                 >
                     <DataGrid
+                        getRowId={(row) => row._id}
                         columnHeaderHeight={30}
                         rowHeight={33}
                         sx={{
