@@ -7,7 +7,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import swaggerConfig from "./swaggerConfig.js";
 
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from "apollo-server-express";
 import { createTransactionTypeDefs, createTransactionResolvers } from './graphql/transactionSchema.js';
 
 import kpiRoutes from "./routes/kpiRoute.js";
@@ -27,7 +27,31 @@ dotenv.config();
 const typeDefs = createTransactionTypeDefs;
 const resolvers = createTransactionResolvers;
 
+const seedDatabase = async () => {
+    const shouldSeedDatabase = process.env.SEED_DB === "true";
+    const shouldResetDatabase = process.env.RESET_DB === "true";
 
+    if (!shouldSeedDatabase && !shouldResetDatabase) {
+        return;
+    }
+
+    if (shouldResetDatabase) {
+        console.log("Resetting database...");
+        await mongoose.connection.db.dropDatabase();
+    }
+
+    const existingKpis = await kpiModel.estimatedDocumentCount();
+    if (existingKpis > 0 && !shouldResetDatabase) {
+        console.log("Seed data already exists. Skipping seed.");
+        return;
+    }
+
+    console.log("Inserting initial data...");
+    await kpiModel.insertMany(kpis);
+    await productModel.insertMany(products);
+    await transactionModel.insertMany(transactions);
+    console.log("Data inserted successfully");
+};
 
 const createServer = async (port) => {
     const app = express();
@@ -61,17 +85,9 @@ const createServer = async (port) => {
             console.log(`Gitlab Project ID: ${process.env.PROJECT_ID}`);
 
             try {
-                console.log("Dropping database...");
-                await mongoose.connection.db.dropDatabase();
-
-                console.log("Inserting initial data...");
-                await kpiModel.insertMany(kpis);
-                await productModel.insertMany(products);
-                await transactionModel.insertMany(transactions);
-
-                console.log("Data inserted successfully");
+                await seedDatabase();
             } catch (error) {
-                console.log(`Error inserting data: ${error}`);
+                console.log(`Error preparing data: ${error}`);
             }
         })
         .catch((error) => console.log(`${error} did not connect`));

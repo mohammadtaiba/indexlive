@@ -1,6 +1,6 @@
 import express from "express";
+import mongoose from "mongoose";
 import TransactionModel from "../models/transactionModel.js";
-import {transactions} from "../data/data.js";
 
 const router = express.Router();
 
@@ -44,7 +44,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /transactions:
+ * /transaction/transactions:
  *   get:
  *     summary: Get all transactions, limited at 50
  *     tags: [Transactions]
@@ -57,8 +57,8 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Transaction'
- *       404:
- *         description: Transactions not found
+ *       500:
+ *         description: Server error
  */
 
 router.get("/transactions", async (req, res) => {
@@ -69,14 +69,14 @@ router.get("/transactions", async (req, res) => {
 
         res.status(200).json(transactions);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
 
 /**
  * @swagger
- * /transactions:
+ * /transaction/transactions:
  *   post:
  *     summary: Create a new transaction
  *     tags: [Transactions]
@@ -93,8 +93,8 @@ router.get("/transactions", async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Transaction'
- *       409:
- *         description: Conflict
+ *       400:
+ *         description: Invalid transaction payload
  */
 router.post("/transactions", async (req, res) => {
     const newTransaction = new TransactionModel(req.body);
@@ -102,14 +102,14 @@ router.post("/transactions", async (req, res) => {
         await newTransaction.save();
         res.status(201).json(newTransaction);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 });
 
 // DELETE a transaction by ID
 /**
  * @swagger
- * /transactions/{id}:
+ * /transaction/transactions/{id}:
  *   delete:
  *     summary: Delete a transaction by ID
  *     tags: [Transactions]
@@ -123,17 +123,27 @@ router.post("/transactions", async (req, res) => {
  *     responses:
  *       204:
  *         description: The transaction was deleted
+ *       400:
+ *         description: Invalid transaction ID
  *       404:
  *         description: The transaction was not found
  */
 
 router.delete("/transactions/:id", async (req, res) => {
     const {id} = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({message: "Invalid transaction ID"});
+    }
+
     try {
-        await TransactionModel.findByIdAndDelete(id);
-        res.status(204).json({message:"Transaction deleted successfully."});
+        const deletedTransaction = await TransactionModel.findByIdAndDelete(id);
+        if (!deletedTransaction) {
+            return res.status(404).json({message: "Transaction not found"});
+        }
+
+        res.sendStatus(204);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(500).json({message: error.message});
     }
 });
 
@@ -142,7 +152,7 @@ router.delete("/transactions/:id", async (req, res) => {
 // UPDATE a transaction by ID
 /**
  * @swagger
- * /transactions/{id}:
+ * /transaction/transactions/{id}:
  *   put:
  *     summary: Update a transaction by ID
  *     tags: [Transactions]
@@ -166,17 +176,27 @@ router.delete("/transactions/:id", async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Transaction'
+ *       400:
+ *         description: Invalid transaction ID or payload
  *       404:
  *         description: The transaction was not found
  */
 router.put("/transactions/:id", async (req, res) => {
     const {id}=req.params;
     const updatedTransaction = req.body;
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({message: "Invalid transaction ID"});
+    }
+
     try {
         const result = await TransactionModel.findByIdAndUpdate(id, updatedTransaction, {new: true});
+        if (!result) {
+            return res.status(404).json({message: "Transaction not found"});
+        }
+
         res.status(200).json(result);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(400).json({message: error.message});
     }
 });
 
