@@ -13,8 +13,10 @@ import {
     HttpLink,
 } from '@apollo/client';
 
+const baseUrl = (import.meta.env.VITE_BASE_URL ?? 'http://localhost:10081').replace(/\/$/, '');
+
 const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://localhost:10081/graphql' }),
+    link: new HttpLink({ uri: `${baseUrl}/graphql` }),
     cache: new InMemoryCache(),
 });
 
