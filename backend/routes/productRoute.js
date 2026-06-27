@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import ProductModel from "../models/productModel.js";
 
 const router = express.Router();
@@ -45,7 +46,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /products:
+ * /product/products:
  *   get:
  *     summary: Get all products
  *     tags: [Products]
@@ -58,8 +59,8 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Product'
- *       404:
- *         description: Products not found
+ *       500:
+ *         description: Server error
  */
 
 router.get("/products", async (req, res) => {
@@ -67,14 +68,14 @@ router.get("/products", async (req, res) => {
         const products = await ProductModel.find();
         res.status(200).json(products);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
 // POST a new product
 /**
  * @swagger
- * /products:
+ * /product/products:
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
@@ -91,8 +92,8 @@ router.get("/products", async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
- *       409:
- *         description: Conflict
+ *       400:
+ *         description: Invalid product payload
  */
 
 router.post("/products", async (req, res) => {
@@ -101,14 +102,14 @@ router.post("/products", async (req, res) => {
         await newProduct.save();
         res.status(201).json(newProduct);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 });
 
 // DELETE a product by ID
 /**
  * @swagger
- * /products/{id}:
+ * /product/products/{id}:
  *   delete:
  *     summary: Delete a product by ID
  *     tags: [Products]
@@ -120,25 +121,35 @@ router.post("/products", async (req, res) => {
  *         required: true
  *         description: The product ID
  *     responses:
- *       200:
+ *       204:
  *         description: The product was deleted
+ *       400:
+ *         description: Invalid product ID
  *       404:
  *         description: The product was not found
  */
 router.delete("/products/:id", async (req, res) => {
     const {id} = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({message: "Invalid product ID"});
+    }
+
     try {
-        await ProductModel.findByIdAndDelete(id);
-        res.status(200).json({message:"Product deleted successfully."});
+        const deletedProduct = await ProductModel.findByIdAndDelete(id);
+        if (!deletedProduct) {
+            return res.status(404).json({message: "Product not found"});
+        }
+
+        res.sendStatus(204);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(500).json({message: error.message});
     }
 });
 
 // UPDATE a product by ID
 /**
  * @swagger
- * /products/{id}:
+ * /product/products/{id}:
  *   put:
  *     summary: Update a product by ID
  *     tags: [Products]
@@ -162,17 +173,27 @@ router.delete("/products/:id", async (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Invalid product ID or payload
  *       404:
  *         description: The product was not found
  */
 router.put("/products/:id", async (req, res) => {
    const {id}=req.params;
    const updatedProduct = req.body;
+   if (!mongoose.isValidObjectId(id)) {
+       return res.status(400).json({message: "Invalid product ID"});
+   }
+
    try {
        const result = await ProductModel.findByIdAndUpdate(id, updatedProduct, {new: true});
+       if (!result) {
+           return res.status(404).json({message: "Product not found"});
+       }
+
        res.status(200).json(result);
    } catch (error) {
-       res.status(404).json({message: error.message});
+       res.status(400).json({message: error.message});
    }
 });
 

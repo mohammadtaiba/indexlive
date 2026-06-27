@@ -86,7 +86,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /kpis:
+ * /kpi/kpis:
  *   get:
  *     summary: Get all KPIs
  *     tags: [KPIs]
@@ -99,15 +99,15 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/KPI'
- *       404:
- *         description: KPIs not found
+ *       500:
+ *         description: Server error
  */
 router.get("/kpis", async (req, res) => {
     try {
         const kpis = await KpiModel.find();
         res.status(200).json(kpis);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 

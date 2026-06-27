@@ -18,7 +18,7 @@ const TransactionSchema = new Schema(
         productIds: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
+                ref: "ProductModel",
             },
         ],
     },

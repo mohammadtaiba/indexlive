@@ -12,13 +12,19 @@ export const createTransactionTypeDefs = gql`
         productIds: [ID!]!
     }
 
+    type DeleteTransactionPayload {
+        success: Boolean!
+        id: ID
+        message: String
+    }
+
     type Query {
         transactions: [Transaction]
     }
 
     type Mutation {
         createTransaction(buyer: String!, amount: Float!, productIds: [ID!]!): Transaction
-        deleteTransaction(id: ID!): Transaction
+        deleteTransaction(id: ID!): DeleteTransactionPayload!
         updateTransaction(id: ID!, buyer: String, amount: Float, productIds: [ID!]): Transaction
     }
 `;
@@ -46,7 +52,19 @@ export const createTransactionResolvers = {
         deleteTransaction: async (_, { id }) => {
             try {
                 const deletedTransaction = await transactionModel.findByIdAndDelete(id);
-                return deletedTransaction;
+                if (!deletedTransaction) {
+                    return {
+                        success: false,
+                        id,
+                        message: "Transaction not found",
+                    };
+                }
+
+                return {
+                    success: true,
+                    id: deletedTransaction.id,
+                    message: "Transaction deleted",
+                };
             } catch (error) {
                 console.error("Error deleting transaction:", error);
                 throw new Error("Failed to delete transaction");
