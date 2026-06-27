@@ -9,7 +9,7 @@
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker)
 ![Project](https://img.shields.io/badge/Project-Portfolio-blue)
 
-IndexLive ist eine Full-Stack-Webanwendung zur Visualisierung und Verwaltung von Finanzdaten.  
+IndexLive ist eine Full-Stack-Webanwendung zur Visualisierung und Verwaltung von Finanzdaten.
 Die Anwendung stellt betriebswirtschaftliche Kennzahlen, Produkte und Transaktionen in einem interaktiven Dashboard dar und bietet dafür REST- sowie GraphQL-Schnittstellen.
 
 Das Projekt zeigt den Aufbau einer modernen MERN-Anwendung mit React, TypeScript, Express, MongoDB, Redux Toolkit, Apollo Client und Docker.
@@ -18,19 +18,19 @@ Das Projekt zeigt den Aufbau einer modernen MERN-Anwendung mit React, TypeScript
 
 ## Inhaltsverzeichnis
 
-- [Projektüberblick](#projektüberblick)
-- [Screenshots](#screenshots)
-- [Ziel des Projekts](#ziel-des-projekts)
-- [Funktionsumfang](#funktionsumfang)
-- [Tech Stack](#tech-stack)
-- [Architektur](#architektur)
-- [API-Übersicht](#api-übersicht)
-- [Datenmodelle](#datenmodelle)
-- [Lokale Installation](#lokale-installation)
-- [Start mit Docker](#start-mit-docker)
-- [Start ohne Docker](#start-ohne-docker)
-- [Was ich mit diesem Projekt umgesetzt habe](#was-ich-mit-diesem-projekt-umgesetzt-habe)
-- [Lizenz](#Lizenz)
+* [Projektüberblick](#projektüberblick)
+* [Screenshots](#screenshots)
+* [Ziel des Projekts](#ziel-des-projekts)
+* [Funktionsumfang](#funktionsumfang)
+* [Tech Stack](#tech-stack)
+* [Architektur](#architektur)
+* [API-Übersicht](#api-übersicht)
+* [Datenmodelle](#datenmodelle)
+* [Lokale Installation](#lokale-installation)
+* [Start mit Docker](#start-mit-docker)
+* [Start ohne Docker](#start-ohne-docker)
+* [Was ich mit diesem Projekt umgesetzt habe](#was-ich-mit-diesem-projekt-umgesetzt-habe)
+* [Lizenz](#Lizenz)
 
 ---
 
@@ -38,8 +38,8 @@ Das Projekt zeigt den Aufbau einer modernen MERN-Anwendung mit React, TypeScript
 
 IndexLive besteht aus einem React-Frontend, einem Express-Backend und einer MongoDB-Datenbank.
 
-Das Frontend stellt Finanzdaten in Form von Diagrammen, Tabellen und Kennzahlen dar.  
-Das Backend stellt die Daten über REST-Endpunkte und eine GraphQL-Schnittstelle bereit.  
+Das Frontend stellt Finanzdaten in Form von Diagrammen, Tabellen und Kennzahlen dar.
+Das Backend stellt die Daten über REST-Endpunkte und eine GraphQL-Schnittstelle bereit.
 Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 ---
@@ -50,7 +50,7 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 <img src="dokumentation/screenshots/dashboard.png" alt="IndexLive Dashboard" width="800">
 
-Das Dashboard zeigt die zentrale Uebersicht der Anwendung mit KPIs, Diagrammen, Produktdaten und aktuellen Transaktionen.
+Das Dashboard zeigt die zentrale Übersicht der Anwendung mit KPIs, Diagrammen, Produktdaten und aktuellen Transaktionen.
 
 ---
 
@@ -74,7 +74,7 @@ Die Predictions-Ansicht berechnet mit linearer Regression eine 30-Tage-Prognose 
 
 <img src="dokumentation/screenshots/predictions-responsive.png" alt="IndexLive Predictions" width="350">
 
-Die responsive Predictions-Ansicht zeigt die Prognose und Zusammenfassung optimiert fuer mobile Bildschirmbreiten.
+Die responsive Predictions-Ansicht zeigt die Prognose und Zusammenfassung optimiert für mobile Bildschirmbreiten.
 
 ---
 
@@ -82,7 +82,7 @@ Die responsive Predictions-Ansicht zeigt die Prognose und Zusammenfassung optimi
 
 <img src="dokumentation/screenshots/architekturzeichnung.png" alt="Architekturzeichnung von IndexLive" width="800">
 
-Die Architekturzeichnung erklaert den technischen Aufbau mit Frontend, Backend, REST-/GraphQL-Schnittstellen und MongoDB-Datenbank.
+Die Architekturzeichnung erklärt den technischen Aufbau mit Frontend, Backend, REST-/GraphQL-Schnittstellen und MongoDB-Datenbank.
 
 ---
 
@@ -98,7 +98,7 @@ Der Projektentwurf zeigt die geplante Struktur und die wichtigsten Bereiche der 
 
 <img src="dokumentation/screenshots/REST-APIs%20-%20Swagger.png" alt="REST-API Dokumentation mit Swagger" width="800">
 
-Die Swagger-Ansicht dokumentiert die REST-Endpunkte und ermoeglicht das direkte Testen der Backend-API im Browser.
+Die Swagger-Ansicht dokumentiert die REST-Endpunkte und ermöglicht das direkte Testen der Backend-API im Browser.
 
 ---
 
@@ -108,30 +108,30 @@ Ziel war die Entwicklung eines webbasierten Finanz-Dashboards, das wirtschaftlic
 
 Die Anwendung bildet typische Anforderungen einer datenbasierten Business-Anwendung ab:
 
-- Verwaltung von Produkten
-- Verwaltung von Transaktionen
-- Darstellung von Umsatz, Kosten und Gewinn
-- Visualisierung von Monats- und Tagesdaten
-- Bereitstellung strukturierter Backend-Schnittstellen
-- Trennung von Frontend, Backend und Datenbank
-- Containerisierung der Anwendung mit Docker
+* Verwaltung von Produkten
+* Verwaltung von Transaktionen
+* Darstellung von Umsatz, Kosten und Gewinn
+* Visualisierung von Monats- und Tagesdaten
+* Bereitstellung strukturierter Backend-Schnittstellen
+* Trennung von Frontend, Backend und Datenbank
+* Containerisierung der Anwendung mit Docker
 
 ---
 
 ## Funktionsumfang
 
-- Dashboard-Oberfläche mit React, TypeScript und Material UI
-- Darstellung zentraler KPIs
-- Anzeige von Produkten und Transaktionen
-- Visualisierung von Umsatz-, Kosten- und Gewinnentwicklungen
-- Diagramme mit Recharts
-- REST-API für Produkte, Transaktionen und KPIs
-- GraphQL-API für Transaktionsdaten
-- API-Zugriff über Redux Toolkit Query
-- GraphQL-Zugriff über Apollo Client
-- Backend mit Express, MongoDB und Mongoose
-- API-Dokumentation mit Swagger
-- Docker-Setup für Frontend, Backend und MongoDB
+* Dashboard-Oberfläche mit React, TypeScript und Material UI
+* Darstellung zentraler KPIs
+* Anzeige von Produkten und Transaktionen
+* Visualisierung von Umsatz-, Kosten- und Gewinnentwicklungen
+* Diagramme mit Recharts
+* REST-API für Produkte, Transaktionen und KPIs
+* GraphQL-API für Transaktionsdaten
+* API-Zugriff über Redux Toolkit Query
+* GraphQL-Zugriff über Apollo Client
+* Backend mit Express, MongoDB und Mongoose
+* API-Dokumentation mit Swagger
+* Docker-Setup für Frontend, Backend und MongoDB
 
 ---
 
@@ -139,33 +139,33 @@ Die Anwendung bildet typische Anforderungen einer datenbasierten Business-Anwend
 
 ### Frontend
 
-- React
-- TypeScript
-- Vite
-- Material UI
-- Redux Toolkit Query
-- Apollo Client
-- Recharts
-- React Router
+* React
+* TypeScript
+* Vite
+* Material UI
+* Redux Toolkit Query
+* Apollo Client
+* Recharts
+* React Router
 
 ### Backend
 
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- GraphQL
-- Apollo Server
-- Swagger
-- Helmet
-- Morgan
-- Dotenv
+* Node.js
+* Express
+* MongoDB
+* Mongoose
+* GraphQL
+* Apollo Server
+* Swagger
+* Helmet
+* Morgan
+* Dotenv
 
 ### Infrastruktur
 
-- Docker
-- Docker Compose
-- MongoDB
+* Docker
+* Docker Compose
+* MongoDB
 
 ---
 
@@ -178,7 +178,7 @@ indexlive/
 ├── database/              # Lokale Datenbankdaten für Docker
 ├── dokumentation/         # Screenshots, Architektur und Projektdokumentation
 └── docker-compose.yml     # Container-Setup für Frontend, Backend und MongoDB
-````
+```
 
 Die Anwendung ist in drei Hauptbereiche getrennt:
 
@@ -306,7 +306,7 @@ SEED_DB=false
 RESET_DB=false
 ```
 
-`SEED_DB=true` laedt die Demo-Daten, wenn die Datenbank noch leer ist.
+`SEED_DB=true` lädt die Demo-Daten, wenn die Datenbank noch leer ist.
 `RESET_DB=true` leert die Datenbank vorher und sollte nur bewusst lokal genutzt werden.
 
 ### Frontend
