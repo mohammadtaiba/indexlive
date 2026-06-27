@@ -10,6 +10,7 @@ services:
       - MONGO_URL=mongodb://mongo:27017/indexlive
       - PORT=10081
       - PROJECT_ID=1957
+      - SEED_DB=true
     command: ["npm", "run", "dev"]
 
   frontend:
