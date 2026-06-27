@@ -52,6 +52,12 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 ---
 
+### Responsive Ansicht
+
+<img src="dokumentation/screenshots/Responsive%20Ansicht.png" alt="Responsive Ansicht von IndexLive" width="350">
+
+---
+
 ### Architekturzeichnung
 
 <img src="dokumentation/screenshots/architekturzeichnung.png" alt="Architekturzeichnung von IndexLive" width="800">
@@ -67,12 +73,6 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 ### REST-API mit Swagger
 
 <img src="dokumentation/screenshots/REST-APIs%20-%20Swagger.png" alt="REST-API Dokumentation mit Swagger" width="800">
-
----
-
-### Responsive Ansicht
-
-<img src="dokumentation/screenshots/Responsive%20Ansicht.png" alt="Responsive Ansicht von IndexLive" width="350">
 
 ---
 
