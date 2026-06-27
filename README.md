@@ -30,7 +30,7 @@ Das Projekt zeigt den Aufbau einer modernen MERN-Anwendung mit React, TypeScript
 - [Start mit Docker](#start-mit-docker)
 - [Start ohne Docker](#start-ohne-docker)
 - [Was ich mit diesem Projekt umgesetzt habe](#was-ich-mit-diesem-projekt-umgesetzt-habe)
-- [Autor](#autor)
+- [Lizenz](#Lizenz)
 
 ---
 
@@ -48,13 +48,33 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 ### Dashboard
 
-<img src="dokumentation/screenshots/indexlive.png" alt="IndexLive Dashboard" width="800">
+<img src="dokumentation/screenshots/dashboard.png" alt="IndexLive Dashboard" width="800">
+
+Das Dashboard zeigt die zentrale Uebersicht der Anwendung mit KPIs, Diagrammen, Produktdaten und aktuellen Transaktionen.
 
 ---
 
-### Responsive Ansicht
+#### Dashboard - Responsive Ansicht
 
-<img src="dokumentation/screenshots/Responsive%20Ansicht.png" alt="Responsive Ansicht von IndexLive" width="350">
+<img src="dokumentation/screenshots/dashboard-responsive.png" alt="Responsive Ansicht von IndexLive" width="350">
+
+Diese Ansicht zeigt, wie sich das Dashboard auf kleineren Bildschirmen anordnet und weiterhin nutzbar bleibt.
+
+---
+
+### Predictions
+
+<img src="dokumentation/screenshots/predictions.png" alt="IndexLive Predictions" width="800">
+
+Die Predictions-Ansicht berechnet mit linearer Regression eine 30-Tage-Prognose auf Basis der letzten Tageswerte und zeigt erwartete Umsatz-, Kosten- und Gewinnentwicklungen.
+
+---
+
+#### Predictions - Responsive Ansicht
+
+<img src="dokumentation/screenshots/predictions-responsive.png" alt="IndexLive Predictions" width="350">
+
+Die responsive Predictions-Ansicht zeigt die Prognose und Zusammenfassung optimiert fuer mobile Bildschirmbreiten.
 
 ---
 
@@ -62,17 +82,23 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 <img src="dokumentation/screenshots/architekturzeichnung.png" alt="Architekturzeichnung von IndexLive" width="800">
 
+Die Architekturzeichnung erklaert den technischen Aufbau mit Frontend, Backend, REST-/GraphQL-Schnittstellen und MongoDB-Datenbank.
+
 ---
 
 ### Projektentwurf
 
 <img src="dokumentation/screenshots/projektentwurf.png" alt="Projektentwurf von IndexLive" width="800">
 
+Der Projektentwurf zeigt die geplante Struktur und die wichtigsten Bereiche der Anwendung vor der technischen Umsetzung.
+
 ---
 
 ### REST-API mit Swagger
 
 <img src="dokumentation/screenshots/REST-APIs%20-%20Swagger.png" alt="REST-API Dokumentation mit Swagger" width="800">
+
+Die Swagger-Ansicht dokumentiert die REST-Endpunkte und ermoeglicht das direkte Testen der Backend-API im Browser.
 
 ---
 
@@ -276,7 +302,12 @@ MONGO_URL=your_mongodb_connection_string
 PORT=10081
 DATABASE_PORT=10085
 PROJECT_ID=1957
+SEED_DB=false
+RESET_DB=false
 ```
+
+`SEED_DB=true` laedt die Demo-Daten, wenn die Datenbank noch leer ist.
+`RESET_DB=true` leert die Datenbank vorher und sollte nur bewusst lokal genutzt werden.
 
 ### Frontend
 
@@ -389,4 +420,5 @@ Dieses Projekt ist besonders relevant für folgende Themenbereiche:
 
 Dieses Projekt dient Demonstrationszwecken.
 Eine Weiterverwendung ist nur nach Absprache erlaubt.
+
 Autor: Mohammad Taiba
