@@ -18,9 +18,25 @@ import {
 } from "recharts";
 
 const pieData = [
-    { name: "Group A", value: 65 },
-    { name: "Group B", value: 35 },
+    { name: "Achieved", value: 65 },
+    { name: "Remaining", value: 35 },
 ];
+
+const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+    }).format(value);
+};
+
+const average = (values: Array<number>) => {
+    if (values.length === 0) {
+        return 0;
+    }
+
+    return values.reduce((total, value) => total + value, 0) / values.length;
+};
 
 const Set2 = () => {
     const { palette } = useTheme();
@@ -28,17 +44,29 @@ const Set2 = () => {
     const { data: productData } = useGetProductsQuery();
 
     const productExpenseData = useMemo(() => {
-        return (
-            productData &&
-            productData.map(({ _id, price, expense }) => {
-                return {
-                    id: _id,
-                    price: price,
-                    expense: expense,
-                };
-            })
-        );
+        return productData?.map(({ _id, price, expense }) => {
+            return {
+                id: _id,
+                price: price,
+                expense: expense,
+            };
+        }) ?? [];
     }, [productData]);
+
+    const productSummary = useMemo(() => {
+        const averagePrice = average(productExpenseData.map(({ price }) => price));
+        const averageExpense = average(productExpenseData.map(({ expense }) => expense));
+        const averageMargin = averagePrice === 0
+            ? 0
+            : ((averagePrice - averageExpense) / averagePrice) * 100;
+
+        return {
+            count: productExpenseData.length,
+            averagePrice,
+            averageExpense,
+            averageMargin,
+        };
+    }, [productExpenseData]);
 
     return (
         <>
@@ -91,7 +119,7 @@ const Set2 = () => {
             </ChartsBox>
 
             <ChartsBox gridArea="d">
-                <BoxHeader title="Targets" sideText="+0,35%" />
+                <BoxHeader title="Product Targets" sideText={`${productSummary.averageMargin.toFixed(1)}% margin`} />
                 <FlexBetween>
                     <PieChart
                         width={210}
@@ -111,15 +139,17 @@ const Set2 = () => {
                     </PieChart>
 
                     <Box>
-                        <Typography variant="h4" color={palette.secondary['800' as keyof typeof palette.secondary]} > Target Sales  </Typography>
-                        <Typography m="0.5rem 0" color={palette.secondary['800' as keyof typeof palette.secondary]} variant="h4"> 1100 </Typography>
+                        <Typography variant="h4" color={palette.secondary['800' as keyof typeof palette.secondary]} > Products Tracked </Typography>
+                        <Typography m="0.5rem 0" color={palette.secondary['800' as keyof typeof palette.secondary]} variant="h4">
+                            {productSummary.count}
+                        </Typography>
                     </Box>
 
                     <Box flexBasis="30%">
-                        <Typography variant="h4">             Losses in Revenue                      </Typography>
-                        <Typography variant="h5">             Losses are down 15%                    </Typography>
-                        <Typography mt="1.4rem" variant="h4"> Profit Margins                         </Typography>
-                        <Typography variant="h5">             Margins are up by 20% from last month. </Typography>
+                        <Typography variant="h4">Average Price</Typography>
+                        <Typography variant="h5">{formatCurrency(productSummary.averagePrice)}</Typography>
+                        <Typography mt="1.4rem" variant="h4">Average Expense</Typography>
+                        <Typography variant="h5">{formatCurrency(productSummary.averageExpense)}</Typography>
                     </Box>
 
                 </FlexBetween>

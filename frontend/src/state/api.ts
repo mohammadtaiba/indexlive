@@ -11,7 +11,9 @@ import {
 
 // Creating the API
 export const api = createApi({
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_BASE_URL ?? "http://localhost:10081",
+    }),
     reducerPath: "main",
     tagTypes: ["Kpis", "Products", "Transactions"], // here we save the informations
 
@@ -44,7 +46,7 @@ export const api = createApi({
         }),
 
         // DELETE PRODUCT
-        deleteProduct: build.mutation<{ success: boolean; id: string }, string> ({
+        deleteProduct: build.mutation<void, string> ({
             query: (id) => ({
                 url: `product/products/${id}`,
                 method: "DELETE",
@@ -73,7 +75,7 @@ export const api = createApi({
         }),
 
         // DELETE TRANSACTION
-        deleteTransaction: build.mutation<{ success: boolean; id: string }, string> ({
+        deleteTransaction: build.mutation<void, string> ({
             query: (id) => ({
                 url: `transaction/transactions/${id}`,
                 method: "DELETE",

@@ -7,6 +7,14 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { useMemo } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
+const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+    }).format(value);
+};
+
 const Set3 = () => {
     const { palette}  = useTheme();
     const pieColors    = [palette.primary['800' as keyof typeof palette.primary], palette.primary['200' as keyof typeof palette.primary]];
@@ -36,6 +44,29 @@ const Set3 = () => {
                 },
             ];
         });
+    }, [kpiData]);
+
+    const overallSummary = useMemo(() => {
+        const kpi = kpiData?.[0];
+
+        if (!kpi) {
+            return {
+                profitMargin: 0,
+                text: "KPI data is loading. Summary metrics will be shown after the first response.",
+            };
+        }
+
+        const profitMargin = kpi.totalRevenue === 0
+            ? 0
+            : (kpi.totalProfit / kpi.totalRevenue) * 100;
+        const expenseRatio = kpi.totalRevenue === 0
+            ? 0
+            : (kpi.totalExpenses / kpi.totalRevenue) * 100;
+
+        return {
+            profitMargin,
+            text: `Revenue is ${formatCurrency(kpi.totalRevenue)} with ${formatCurrency(kpi.totalExpenses)} in expenses. The current profit margin is ${profitMargin.toFixed(1)}%, while expenses account for ${expenseRatio.toFixed(1)}% of revenue.`,
+        };
     }, [kpiData]);
 
     const productColumns = [
@@ -90,7 +121,7 @@ const Set3 = () => {
             <ChartsBox gridArea="e">
                 <BoxHeader
                     title="List of Products"
-                    sideText={`${productData?.length} products`}
+                    sideText={`${productData?.length ?? 0} products`}
                 />
                 <Box
                     mt="0.5rem"
@@ -116,7 +147,7 @@ const Set3 = () => {
             <ChartsBox gridArea="f">
                 <BoxHeader
                     title="Recent Orders"
-                    sideText={`${transactionData?.length} latest transactions`}
+                    sideText={`${transactionData?.length ?? 0} latest transactions`}
                 />
                 <Box
                     mt="0.5rem"
@@ -143,7 +174,7 @@ const Set3 = () => {
                 <BoxHeader title="Expense Breakdown By Category" sideText="+12%" />
                 <FlexBetween p="0 1rem" textAlign="center">
                     {pieChartData?.map((data) => (           // loop through pieChartData
-                        <Box>
+                        <Box key={data[0].name}>
                             <PieChart width={120} height={100}>
                                 <Pie
                                     stroke="none"
@@ -167,7 +198,7 @@ const Set3 = () => {
             <ChartsBox gridArea="h">
                 <BoxHeader
                     title="Overall Summary and Explanation Data"
-                    sideText="+23%"
+                    sideText={`${overallSummary.profitMargin.toFixed(1)}% margin`}
                 />
                 <Box
                     height="20px" // Dicke der Linie
@@ -179,15 +210,12 @@ const Set3 = () => {
                         height="20px" // Dicke der Linie
                         bgcolor={palette.primary['800' as keyof typeof palette.primary]}
                         borderRadius="1rem"
-                        width="40%"
+                        width={`${Math.min(Math.max(overallSummary.profitMargin, 0), 100)}%`}
                     >
                     </Box>
                 </Box>
                 <Typography margin="2rem" variant="h5">
-                    Orci aliquam enim vel diam. Venenatis euismod id donec mus lorem etiam
-                    ullamcorper odio sed. Ipsum non sed gravida etiam urna egestas
-                    molestie volutpat et. Malesuada quis pretium aliquet lacinia ornare
-                    sed. In volutpat nullam at est id cum pulvinar nunc.
+                    {overallSummary.text}
                 </Typography>
             </ChartsBox>
         </>

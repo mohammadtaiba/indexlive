@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { Box, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween.tsx";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const { palette } = useTheme();
-    const [selected, setSelected] = useState("charts");
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const selected = pathname.startsWith("/predictions") ? "predictions" : "charts";
 
     return (
         <FlexBetween mb="0.25rem" p="0.5rem 0">
@@ -20,8 +20,6 @@ const Navbar = () => {
                          }}
                          onClick={() => {
                              navigate('/');
-                             setSelected('home');
-
                          }}
             >
                 <CurrencyExchangeIcon sx={{ fontSize: "28px", color: palette.primary.main }} />
@@ -32,9 +30,9 @@ const Navbar = () => {
 
             {/* RIGHT SIDE */}
             <FlexBetween gap="2rem">
-                {['charts', 'predictions'].map((item, index) => (
+                {['charts', 'predictions'].map((item) => (
                     <Box
-                        key={index}
+                        key={item}
                         sx={{
                             "&:hover": { color: palette.primary['900' as keyof typeof palette.primary] },
                             color: selected === item ? palette.primary['700' as keyof typeof palette.primary] : palette.grey[900],
@@ -43,7 +41,6 @@ const Navbar = () => {
                             textDecoration: 'none',
                             cursor: 'pointer'
                         }}
-                        onClick={() => setSelected(item)}
                     >
                         <Link
                             to={`/${item === 'charts' ? '' : item}`}

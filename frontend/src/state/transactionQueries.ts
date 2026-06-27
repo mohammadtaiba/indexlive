@@ -12,7 +12,7 @@ export const GET_TRANSACTIONS = gql`
 `;
 
 export const CREATE_TRANSACTION = gql`
-    mutation CreateTransaction($buyer: String!, $amount: Float!, $productIds: [String!]!) {
+    mutation CreateTransaction($buyer: String!, $amount: Float!, $productIds: [ID!]!) {
         createTransaction(buyer: $buyer, amount: $amount, productIds: $productIds) {
             id
             buyer
@@ -27,12 +27,13 @@ export const DELETE_TRANSACTION = gql`
         deleteTransaction(id: $id) {
             success
             id
+            message
         }
     }
 `;
 
 export const UPDATE_TRANSACTION = gql`
-    mutation UpdateTransaction($id: ID!, $buyer: String, $amount: Float, $productIds: [String!]) {
+    mutation UpdateTransaction($id: ID!, $buyer: String, $amount: Float, $productIds: [ID!]) {
         updateTransaction(id: $id, buyer: $buyer, amount: $amount, productIds: $productIds) {
             id
             buyer
