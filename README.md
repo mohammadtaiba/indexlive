@@ -48,31 +48,31 @@ Die Daten werden über Mongoose in MongoDB gespeichert und verarbeitet.
 
 ### Dashboard
 
-<img src="dokumentation/indexlive.png" alt="IndexLive Dashboard" width="800">
+<img src="dokumentation/screenshots/indexlive.png" alt="IndexLive Dashboard" width="800">
 
 ---
 
 ### Architekturzeichnung
 
-<img src="dokumentation/architekturzeichnung.png" alt="Architekturzeichnung von IndexLive" width="800">
+<img src="dokumentation/screenshots/architekturzeichnung.png" alt="Architekturzeichnung von IndexLive" width="800">
 
 ---
 
 ### Projektentwurf
 
-<img src="dokumentation/projektentwurf.png" alt="Projektentwurf von IndexLive" width="800">
+<img src="dokumentation/screenshots/projektentwurf.png" alt="Projektentwurf von IndexLive" width="800">
 
 ---
 
 ### REST-API mit Swagger
 
-<img src="dokumentation/REST-APIs%20-%20Swagger.png" alt="REST-API Dokumentation mit Swagger" width="800">
+<img src="dokumentation/screenshots/REST-APIs%20-%20Swagger.png" alt="REST-API Dokumentation mit Swagger" width="800">
 
 ---
 
 ### Responsive Ansicht
 
-<img src="dokumentation/Responsive%20Ansicht.png" alt="Responsive Ansicht von IndexLive" width="350">
+<img src="dokumentation/screenshots/Responsive%20Ansicht.png" alt="Responsive Ansicht von IndexLive" width="350">
 
 ---
 
