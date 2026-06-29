@@ -30,7 +30,7 @@ Das Projekt zeigt den Aufbau einer modernen MERN-Anwendung mit React, TypeScript
 * [Start mit Docker](#start-mit-docker)
 * [Start ohne Docker](#start-ohne-docker)
 * [Was ich mit diesem Projekt umgesetzt habe](#was-ich-mit-diesem-projekt-umgesetzt-habe)
-* [Lizenz](#Lizenz)
+* [License](#License)
 
 ---
 
@@ -416,9 +416,8 @@ Dieses Projekt ist besonders relevant für folgende Themenbereiche:
 
 ---
 
-## Lizenz
+## License
 
-Dieses Projekt dient Demonstrationszwecken.
-Eine Weiterverwendung ist nur nach Absprache erlaubt.
+Copyright (c) 2026 Mohammad Taiba. All rights reserved.
 
-Autor: Mohammad Taiba
+This project is published for portfolio and review purposes only. See [LICENSE](./LICENSE).
